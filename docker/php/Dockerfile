@@ -18,7 +18,8 @@ RUN set -eux; \
         intl \
         opcache \
         pdo \
-        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
         zip \
         apcu \
     # Install Composer and Symfony CLI
