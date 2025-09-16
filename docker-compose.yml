@@ -1,0 +1,56 @@
+services:
+  nginx-service:
+    image: nginx:1.28-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - tab_groups_saver_api_network
+
+  php-service:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - .:/var/www/html
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    networks:
+      - tab_groups_saver_api_network
+
+  postgres-service:
+    image: postgres:17.5-alpine
+    ports:
+      - "5432:5432"
+    restart: no
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tab_groups_saver_api_network
+
+  redis-service:
+    image: redis:7.2.0-alpine
+    networks:
+      - tab_groups_saver_api_network
+
+volumes:
+  postgres_data:
+
+networks:
+  tab_groups_saver_api_network:
+    driver: bridge

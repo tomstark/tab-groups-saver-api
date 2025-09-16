@@ -1,0 +1,17 @@
+# Production environment override
+services:
+  nginx-service:
+    # ToDo - upload an image to dockerhub then use that instead of image in docker-compose.yml. In doing so, removes need for volumes below
+    volumes:
+      - ./docker/nginx/certs:/etc/nginx/certs # TEST - change when ready
+      - ./docker/nginx/conf.d/prod/default.conf:/etc/nginx/conf.d/default.conf # TEST - duplicate of dev file for now. Change when ready
+
+  php-service:
+    build:
+      context: .
+      target: "app" # ToDo - likely make app_prod when ready
+    environment:
+      APP_ENV: "production"
+
+  postgres-service:
+    restart: always
