@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-final class LoginController extends Controller
+final class ApiLoginController extends Controller
 {
     public function authenticate(Request $request): JsonResponse
     {

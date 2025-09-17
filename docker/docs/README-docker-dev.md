@@ -95,3 +95,9 @@ Dotenv\Dotenv::createArrayBacked(base_path())->load();
 ## 🎁 Production Considerations
 
 Currently, this is dev-focused and would require further work to make prod-ready. At scale, production deployment usually moves beyond Docker Compose toward orchestrators.
+
+## 👨🏻‍🔧 Troubleshooting
+
+- xDebug doesn't work with PhpStorm's test runner
+    - Right-click on either the test runner icon beside a test or a test directory and select "Modify Run Configuration..." > Click the directory icon in the "Environment variables" input > select the `/docker/.env.docker` file.
+      - Might require dot files to be shown in the 'open' dialog, `shift+cmd+.` on macOS.
