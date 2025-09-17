@@ -12,6 +12,7 @@ RUN set -eux; \
         libicu-dev \
         libzip-dev \
         zip \
+        unzip \
     # Remove apt cache to reduce image size (https://docs.docker.com/build/building/best-practices)
     && rm -rf /var/lib/apt/lists/* \
     && install-php-extensions \
