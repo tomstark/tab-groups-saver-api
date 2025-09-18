@@ -1,0 +1,65 @@
+name: CI - Code Quality & Testing
+
+on:
+  push:
+    branches: [main, develop, 'feature/**']
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  code-quality-testing:
+    name: Code Quality & Testing
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Docker image cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ hashFiles('docker/php/Dockerfile') }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      - name: Build Docker image with Buildx, tag and set to cache
+        run: |
+          docker buildx build \
+            --cache-from=type=local,src=/tmp/.buildx-cache \
+            --cache-to=type=local,dest=/tmp/.buildx-cache-new,mode=max \
+            --target app_dev \
+            -f docker/php/Dockerfile \
+            -t buildx_cached_build:ci \
+            --load \
+            .
+
+          # Replace old cache with updated one (required for actions/cache)
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Set up Composer cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: |
+          docker compose -f docker-compose-ci.yml run --rm php-service \
+            composer validate --strict && \
+            composer install --prefer-dist --no-progress --no-scripts
+
+      - name: Run 'composer test' command
+        run: |
+          docker compose -f docker-compose-ci.yml run --rm -e APP_KEY=$(echo "base64:$(openssl rand -base64 32)") php-service \
+            composer test
+
+      - name: Dump logs on failure
+        if: failure()
+        run: docker compose logs

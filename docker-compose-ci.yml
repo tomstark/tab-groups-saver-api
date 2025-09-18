@@ -1,0 +1,8 @@
+services:
+  php-service:
+    image: buildx_cached_build:ci
+    volumes:
+      - .:/var/www/html
+      - ./docker/php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+    environment:
+      XDEBUG_MODE: coverage
