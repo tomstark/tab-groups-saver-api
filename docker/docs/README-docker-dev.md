@@ -43,11 +43,11 @@ tab-groups-saver.test
 #### 4. PHP container commands
 
 - Install dependencies
-    - `docker exec $(docker-compose ps -q php-service) composer install`
+    - `docker compose exec php-service composer install`
 - Set the APP_KEY
-    - `docker exec $(docker-compose ps -q php-service) php artisan key:generate`
+    - `docker compose exec php-service php artisan key:generate`
 - Run DB migrations
-    - `docker exec $(docker-compose ps -q php-service) php artisan migrate`
+    - `docker compose exec php-service php artisan migrate`
 
 ## 🐳 Docker Up
 

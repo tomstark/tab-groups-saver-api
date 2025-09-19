@@ -16,7 +16,13 @@ See the [Docker Development Docs
 Commands:
 - `composer test`
   - Run all in the `composer.json`'s `scripts.test`
+- `composer test:types`
+  - Runs PHPStan alone
+
+Commands not prefixed with 'test' may mutate code
 - `composer lint`
-  - Run Laravel Pint. Where `composer test` will not mutate files, this will.
+  - Run Laravel Pint
+  - ⚠️ Where `composer test` / `composer test:lint` will not mutate files, this will.
 - `composer refactor`
-  - Run Rector. Where `composer test` will not mutate files, this will.
+  - Run Rector
+  - ⚠️ Where `composer test`/ `composer test:refactor` will not mutate files, this will.
