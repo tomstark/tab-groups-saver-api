@@ -16,7 +16,6 @@
         "nunomaduro/essentials": "^0.1"
     },
     "require-dev": {
-        "roave/security-advisories": "dev-latest",
         "fakerphp/faker": "^1.23",
         "larastan/larastan": "^3.0",
         "laravel/pail": "^1.2.2",
@@ -28,7 +27,9 @@
         "pestphp/pest-plugin-arch": "^4.0",
         "pestphp/pest-plugin-laravel": "^4.0",
         "pestphp/pest-plugin-type-coverage": "^4.0",
-        "rector/rector": "^2.1"
+        "rector/rector": "^2.1",
+        "roave/security-advisories": "dev-latest",
+        "spatie/laravel-ray": "^1.40"
     },
     "autoload": {
         "psr-4": {

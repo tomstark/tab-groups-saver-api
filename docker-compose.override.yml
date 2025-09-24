@@ -16,7 +16,22 @@ services:
     environment:
       APP_ENV: "${APP_ENV:-local}"
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+    depends_on:
+      - buggregator-service
+      - postgres-service
+      - redis-service
 
   postgres-service:
     ports:
       - "3306:3306"
+
+  # https://docs.buggregator.dev/getting-started.html
+  buggregator-service:
+    image: ghcr.io/buggregator/server:latest
+    ports:
+      - "8000:8000"
+      - "1025:1025"
+      # - "9912:9912" #
+      # - "9913:9913" #
+    networks:
+      - tab_groups_saver_api_network

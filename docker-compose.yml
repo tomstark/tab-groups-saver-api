@@ -6,6 +6,10 @@ services:
       - "443:443"
     volumes:
       - .:/var/www/html
+    depends_on:
+      - php-service
+      - postgres-service
+      - redis-service
     networks:
       - tab_groups_saver_api_network
 
@@ -26,6 +30,9 @@ services:
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
+    depends_on:
+      - postgres-service
+      - redis-service
     networks:
       - tab_groups_saver_api_network
 
