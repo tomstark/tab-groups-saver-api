@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\HTTP\Controllers\Auth\AuthenticationController;
-use App\Modules\User\HTTP\Controllers\Auth\EmailVerificationNotificationController;
-use App\Modules\User\HTTP\Controllers\Auth\NewPasswordController;
-use App\Modules\User\HTTP\Controllers\Auth\PasswordResetLinkController;
-use App\Modules\User\HTTP\Controllers\Auth\RegistrationController;
-use App\Modules\User\HTTP\Controllers\Auth\VerifyEmailController;
-use App\Modules\User\HTTP\Controllers\UserController;
+use App\Modules\User\Presentation\HTTP\Controllers\Auth\AuthenticationController;
+use App\Modules\User\Presentation\HTTP\Controllers\Auth\EmailVerificationNotificationController;
+use App\Modules\User\Presentation\HTTP\Controllers\Auth\NewPasswordController;
+use App\Modules\User\Presentation\HTTP\Controllers\Auth\PasswordResetLinkController;
+use App\Modules\User\Presentation\HTTP\Controllers\Auth\RegistrationController;
+use App\Modules\User\Presentation\HTTP\Controllers\Auth\VerifyEmailController;
+use App\Modules\User\Presentation\HTTP\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // ⭐️ DON'T FORGET ⭐️ All are prefixed with '/api'

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Core\Providers;
 
-use App\Modules\User\Actions\Facades\CreateEmailVerificationSignedRoute;
-use App\Modules\User\Models\PersonalAccessToken;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Actions\Facades\CreateEmailVerificationSignedRouteAction;
+use App\Modules\User\Domain\Models\PersonalAccessToken;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\ServiceProvider;
@@ -48,7 +48,7 @@ final class AppServiceProvider extends ServiceProvider
                 /** @var User $notifiable */
                 /** @var string $frontendUrl */
                 $frontendUrl = config('app.frontend_url');
-                $temporarySignedRoute = CreateEmailVerificationSignedRoute::run($notifiable);
+                $temporarySignedRoute = CreateEmailVerificationSignedRouteAction::run($notifiable);
 
                 return $frontendUrl . $temporarySignedRoute;
             }

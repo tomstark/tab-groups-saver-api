@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\HTTP\Controllers\Auth;
+namespace App\Modules\User\Presentation\HTTP\Controllers\Auth;
 
 use App\Modules\Core\HTTP\Controllers\Controller;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;

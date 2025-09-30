@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\HTTP\Enums\AuthRouteNames;
+use App\Modules\User\Presentation\HTTP\Enums\AuthRouteNames;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 

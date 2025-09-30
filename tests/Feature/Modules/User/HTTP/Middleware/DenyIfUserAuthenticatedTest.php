@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\HTTP\Middleware\DenyIfUserAuthenticated;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Presentation\HTTP\Middleware\DenyIfUserAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 it('allows guest users', function () {

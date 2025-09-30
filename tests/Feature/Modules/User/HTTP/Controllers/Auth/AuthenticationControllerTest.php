@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\HTTP\Enums\AuthRouteNames;
-use App\Modules\User\Models\PersonalAccessToken;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\PersonalAccessToken;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Presentation\HTTP\Enums\AuthRouteNames;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 

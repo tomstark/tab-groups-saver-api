@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\Actions;
+namespace App\Modules\User\Domain\Actions;
 
-use App\Modules\User\HTTP\Enums\AuthRouteNames;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Presentation\HTTP\Enums\AuthRouteNames;
 use Illuminate\Support\Facades\URL;
 
-final class CreateEmailVerificationSignedRoute
+final class CreateEmailVerificationSignedRouteAction
 {
     /**
      * @param  array{}|array{id: string, hash: string}  $parameters  = []

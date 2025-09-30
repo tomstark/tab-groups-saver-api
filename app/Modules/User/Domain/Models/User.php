@@ -2,22 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\Models;
+namespace App\Modules\User\Domain\Models;
 
+use App\Modules\User\Infrastructure\Eloquent\UserQueryBuilder;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @mixin EloquentBuilder<User>
- * @mixin QueryBuilder
+ * @method static UserQueryBuilder<User> query()
+ *
+ * @mixin UserQueryBuilder<User>
  */
 #[UseFactory(UserFactory::class)]
 final class User extends Authenticatable implements MustVerifyEmail
@@ -28,6 +29,8 @@ final class User extends Authenticatable implements MustVerifyEmail
     public $incrementing = false;
 
     protected $keyType = 'string';
+
+    protected static string $builder = UserQueryBuilder::class;
 
     /**
      * The attributes that are mass assignable.

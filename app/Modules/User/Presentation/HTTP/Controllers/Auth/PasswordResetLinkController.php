@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\HTTP\Controllers\Auth;
+namespace App\Modules\User\Presentation\HTTP\Controllers\Auth;
 
 use App\Modules\Core\HTTP\Controllers\Controller;
 use Illuminate\Http\JsonResponse;

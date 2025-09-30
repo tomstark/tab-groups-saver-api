@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\Actions\Facades\CreateEmailVerificationSignedRoute;
-use App\Modules\User\HTTP\Enums\AuthRouteNames;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Actions\Facades\CreateEmailVerificationSignedRouteAction;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Presentation\HTTP\Enums\AuthRouteNames;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Event;
 
@@ -19,7 +19,7 @@ test('email can be verified', function () {
 
     // Act
     $response = $this->actingAs($user, 'sanctum')->get(
-        CreateEmailVerificationSignedRoute::run($user)
+        CreateEmailVerificationSignedRouteAction::run($user)
     );
 
     // Assert
@@ -35,7 +35,7 @@ test('email is not verified with invalid hash', function () {
 
     // Act
     $response = $this->actingAs($user)->get(
-        CreateEmailVerificationSignedRoute::run($user, ['id' => $user->id, 'hash' => sha1('wrong-email')])
+        CreateEmailVerificationSignedRouteAction::run($user, ['id' => $user->id, 'hash' => sha1('wrong-email')])
     );
 
     // Assert
@@ -51,7 +51,7 @@ test('attempting to re-verify returns ok without dispatching verified event', fu
 
     // Act
     $response = $this->actingAs($verifiedUser)->get(
-        CreateEmailVerificationSignedRoute::run($verifiedUser)
+        CreateEmailVerificationSignedRouteAction::run($verifiedUser)
     );
 
     // Assert

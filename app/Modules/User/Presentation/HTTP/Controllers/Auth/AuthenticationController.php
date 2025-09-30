@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\HTTP\Controllers\Auth;
+namespace App\Modules\User\Presentation\HTTP\Controllers\Auth;
 
 use App\Modules\Core\HTTP\Controllers\Controller;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -37,6 +37,15 @@ final class AuthenticationController extends Controller
     public function sanctumTest(Request $request): Response
     {
         // ToDo - just a test, remove when ready
+        // ray('sanctumTest');
+        // $xDebugTest = true;
+        // $request->validate([
+        //     'email' => ['required', 'email'],
+        //     'password' => ['required'],
+        // ]);
+        // abort(404);
+        // throw new \Exception('Ooops', 409);
+        // throw new BadRequestHttpException;
         return response(['a' => 'Hello']);
     }
 

@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\HTTP\Enums\AuthRouteNames;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Presentation\HTTP\Enums\AuthRouteNames;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;

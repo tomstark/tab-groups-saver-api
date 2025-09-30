@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use App\Modules\Core\HTTP\Responses\Formatters\ExceptionResponseFormatter;
 use App\Modules\Core\HTTP\Responses\Formatters\JsonProblemDetailsResponseFormatter;
-use App\Modules\User\HTTP\Middleware\DenyIfUserAuthenticated;
-use App\Modules\User\HTTP\Middleware\DenyIfUserEmailNotVerified;
+use App\Modules\User\Presentation\HTTP\Middleware\DenyIfUserAuthenticated;
+use App\Modules\User\Presentation\HTTP\Middleware\DenyIfUserEmailNotVerified;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

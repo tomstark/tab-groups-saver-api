@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\HTTP\Middleware;
+namespace App\Modules\User\Presentation\HTTP\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

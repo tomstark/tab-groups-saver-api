@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Modules\User\HTTP\Middleware\DenyIfUserEmailNotVerified;
-use App\Modules\User\Models\User;
+use App\Modules\User\Domain\Models\User;
+use App\Modules\User\Presentation\HTTP\Middleware\DenyIfUserEmailNotVerified;
 use Illuminate\Support\Facades\Route;
 
 it('allows verified users', function () {
