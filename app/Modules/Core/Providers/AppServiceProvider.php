@@ -11,6 +11,7 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
+use Laravel\Telescope\TelescopeServiceProvider as LaravelTelescopeServiceProvider;
 
 final class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,14 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (class_exists(LaravelTelescopeServiceProvider::class) && $this->app->environment('local')) {
+            // @codeCoverageIgnoreStart
+            // As this only runs in the 'local' environment, it's irrelevant to php-code-coverage
+            $this->app->register(LaravelTelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+            // @codeCoverageIgnoreEnd
+        }
+
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
 
         ResetPassword::createUrlUsing(
