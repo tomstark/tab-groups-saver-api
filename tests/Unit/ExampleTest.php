@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Models\User;
+use App\Modules\User\Models\User;
 
 test('that true is true', function () {
     expect(true)->toBeTrue();
