@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class DenyIfUserEmailNotVerified
+final readonly class DenyIfUserEmailNotVerified
 {
     /**
      * @param  Closure(Request): (Response)  $next

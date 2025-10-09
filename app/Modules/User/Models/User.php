@@ -4,18 +4,30 @@ declare(strict_types=1);
 
 namespace App\Modules\User\Models;
 
+use App\Modules\Space\Models\Space;
+use Carbon\CarbonImmutable;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property string $id
+ * @property string $name
+ * @property string $email
+ * @property CarbonImmutable $email_verified_at
+ * @property CarbonImmutable $created_at
+ * @property CarbonImmutable $updated_at
+ * @property-read Collection<int, Space>$spaces
+ *
  * @mixin EloquentBuilder<User>
  * @mixin QueryBuilder
  */
@@ -51,6 +63,14 @@ final class User extends Authenticatable implements MustVerifyEmail
     ];
 
     /**
+     * @return HasMany<Space, covariant User>
+     */
+    public function spaces(): HasMany
+    {
+        return $this->hasMany(Space::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
@@ -58,7 +78,7 @@ final class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            'email_verified_at' => 'immutable_datetime', // CarbonImmutable
             'password' => 'hashed',
         ];
     }

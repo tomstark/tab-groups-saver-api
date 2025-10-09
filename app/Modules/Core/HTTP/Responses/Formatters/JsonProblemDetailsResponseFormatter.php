@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
-final class JsonProblemDetailsResponseFormatter implements ExceptionResponseFormatter
+final readonly class JsonProblemDetailsResponseFormatter implements ExceptionResponseFormatter
 {
     public function supports(Response $response, Throwable $e): bool
     {

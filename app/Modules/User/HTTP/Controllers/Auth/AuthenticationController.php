@@ -8,7 +8,6 @@ use App\Modules\Core\HTTP\Controllers\Controller;
 use App\Modules\User\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 final class AuthenticationController extends Controller
@@ -32,12 +31,6 @@ final class AuthenticationController extends Controller
         }
 
         return response()->json(['message' => 'Failed to log in'], 401);
-    }
-
-    public function sanctumTest(Request $request): Response
-    {
-        // ToDo - just a test, remove when ready
-        return response(['a' => 'Hello']);
     }
 
     public function destroy(Request $request): JsonResponse

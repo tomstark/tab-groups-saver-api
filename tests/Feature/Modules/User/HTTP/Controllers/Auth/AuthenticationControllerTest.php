@@ -9,13 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 beforeEach(function () {
-    $this->sanctumTestRouteName = AuthRouteNames::TempSanctumTest->value;
     $this->loginRouteName = AuthRouteNames::Login->value;
     $this->logoutRouteName = AuthRouteNames::Logout->value;
-});
-
-test("'Sanctum test' has 'api', auth and 'verified' middleware applied", function () {
-    $this->assertRouteHasMiddleware($this->sanctumTestRouteName, ['api', 'auth:sanctum', 'verified']);
 });
 
 test("login route has 'api' and 'guest' middleware applied", function () {
@@ -80,22 +75,13 @@ it('validates required email and password fields', function () {
 
 test('users can logout', function () {
     // Arrange
-    $tokenMock = Mockery::mock(new PersonalAccessToken);
-    $user = (User::factory()->create())->withAccessToken($tokenMock);
+    $tokenSpy = Mockery::spy(new PersonalAccessToken);
+    $user = (User::factory()->create())->withAccessToken($tokenSpy);
 
     // Act
     $response = $this->actingAs($user, 'sanctum')->postJson(route($this->logoutRouteName));
 
     // Assert
     $response->assertOk();
-    $tokenMock->shouldHaveReceived('delete')->once();
-});
-
-// ToDo - temporary, evolve / remove later
-it('Sanctum test', function () {
-    // Arrange & Act
-    $response = $this->actingAs(User::factory()->create(), 'sanctum')->getJson(route($this->sanctumTestRouteName));
-
-    // Assert
-    $response->assertOk();
+    $tokenSpy->shouldHaveReceived('delete')->once();
 });

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -13,12 +16,8 @@ declare(strict_types=1);
 |
 */
 
-pest()->extend(Tests\TestCase::class)
-    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
-    ->in('Feature');
-
-pest()->extend(Tests\TestCase::class)
-    ->in('Architecture');
+pest()->extend(TestCase::class)->use(RefreshDatabase::class)->in('Feature');
+pest()->extend(TestCase::class)->in('Architecture');
 
 /*
 |--------------------------------------------------------------------------
@@ -31,8 +30,22 @@ pest()->extend(Tests\TestCase::class)
 |
 */
 
-expect()->extend('toBeOne', function () {
-    return $this->toBe(1);
+/**
+ * Expects that keys are: the only keys present and all the keys expected
+ */
+expect()->extend('toHaveExactKeys', function (array $keys, bool $inExactOrder = true) {
+    $valueToCheck = array_keys((array) $this->value);
+
+    if ($inExactOrder) {
+        expect($valueToCheck)->toBe($keys);
+
+        return $this;
+    }
+
+    // Expected keys, but order doesn't matter
+    expect($valueToCheck)->toEqualCanonicalizing($keys);
+
+    return $this;
 });
 
 /*

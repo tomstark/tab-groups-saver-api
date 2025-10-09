@@ -28,6 +28,9 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Don't overlook: nunomaduro/essentials applies many defaults
+        // - via NunoMaduro\Essentials\EssentialsServiceProvider (mixed with config/essentials.php)
+
         if (class_exists(LaravelTelescopeServiceProvider::class) && $this->app->environment('local')) {
             // @codeCoverageIgnoreStart
             // As this only runs in the 'local' environment, it's irrelevant to php-code-coverage

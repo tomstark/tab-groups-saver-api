@@ -13,5 +13,4 @@ enum AuthRouteNames: string
     case ResetPassword = 'auth.reset-password';
     case SendEmailVerification = 'auth.send-email-verification';
     case SendForgottenPasswordLink = 'auth.send-forgotten-password-link';
-    case TempSanctumTest = 'auth.temp-sanctum-test';
 }

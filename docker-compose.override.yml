@@ -22,8 +22,8 @@ services:
       - redis-service
 
   postgres-service:
-    ports:
-      - "3306:3306"
+    volumes:
+      - ./ignoredDir:/var/ignoredDir
 
   # https://docs.buggregator.dev/getting-started.html
   buggregator-service:

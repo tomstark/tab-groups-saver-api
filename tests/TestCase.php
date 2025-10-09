@@ -6,6 +6,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Route;
+use Mockery;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -30,5 +31,26 @@ abstract class TestCase extends BaseTestCase
                 "Failed asserting that route [{$routeName}] has middleware [{$middlewareName}]."
             );
         }
+    }
+
+    /**
+     * 'Accessor' = the class we're creating the facade for
+     * @param  class-string  $facadeClassName  - class-string of the actual facade under test
+     * @param  class-string  $accessorClassName  - class-string of the Accessor
+     */
+    protected function assertFacadePrepared(
+        string $facadeClassName,
+        string $accessorClassName,
+        array $args,
+        string $methodNameBeingCalled = 'run'
+    ): void {
+        // Arrange
+        app()->instance($accessorClassName, Mockery::spy(new $accessorClassName));
+
+        // Act
+        $facadeClassName::$methodNameBeingCalled(...$args);
+
+        // Assert
+        app($accessorClassName)->shouldHaveReceived($methodNameBeingCalled)->with(...$args)->once();
     }
 }

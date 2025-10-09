@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-final class DenyIfUserAuthenticated
+final readonly class DenyIfUserAuthenticated
 {
     /**
      * @param  Closure(Request): (Response)  $next

@@ -8,7 +8,7 @@ use App\Modules\User\HTTP\Enums\AuthRouteNames;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\URL;
 
-final class CreateEmailVerificationSignedRoute
+final readonly class CreateEmailVerificationSignedRoute
 {
     /**
      * @param  array{}|array{id: string, hash: string}  $parameters  = []
