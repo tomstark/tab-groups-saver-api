@@ -60,8 +60,9 @@ Route::name('spaces.')->group(
         Route::middleware($fullAuthMiddleware)->group(function () {
             Route::get('/spaces', [SpaceController::class, 'index'])->name('index');
 
+            Route::post('/spaces', [SpaceController::class, 'store'])->name('create');
+
             // ToDo
-            // Route::post('/spaces', [SpaceController::class, 'store'])->name('create');
             // Route::patch('/spaces/{space_id}', [SpaceController::class, 'update'])->name('update');
             // Route::delete('/spaces/{space_id}', [SpaceController::class, 'destroy'])->name('delete');
         });

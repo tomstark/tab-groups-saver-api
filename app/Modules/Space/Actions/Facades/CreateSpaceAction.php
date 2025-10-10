@@ -1,0 +1,21 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Modules\Space\Actions\Facades;
+
+use App\Modules\Core\Traits\MockableFinalFacadeTrait;
+use Illuminate\Support\Facades\Facade;
+
+/**
+ * @mixin \App\Modules\Space\Actions\CreateSpaceAction
+ */
+final class CreateSpaceAction extends Facade
+{
+    use MockableFinalFacadeTrait;
+
+    protected static function getFacadeAccessor(): string
+    {
+        return \App\Modules\Space\Actions\CreateSpaceAction::class;
+    }
+}
