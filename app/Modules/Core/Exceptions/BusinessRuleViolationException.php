@@ -6,12 +6,12 @@ namespace App\Modules\Core\Exceptions;
 
 use Exception;
 
-abstract class DomainInvariantBrokenException extends Exception
+abstract class BusinessRuleViolationException extends Exception
 {
     /** @var int */
     public $code = 422;
 
-    protected string $userMessage = 'Cannot process this request due to a domain rule conflict.';
+    protected string $userMessage = 'Cannot process this request due to a conflict.';
 
     public function __construct(?string $message = null)
     {

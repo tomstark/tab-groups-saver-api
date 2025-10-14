@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Space\DTOs;
 
 /**
- * @property-read string $id
  * @property-read string $name
- * @property-read int $position
  */
 final readonly class CreateSpaceDto
 {

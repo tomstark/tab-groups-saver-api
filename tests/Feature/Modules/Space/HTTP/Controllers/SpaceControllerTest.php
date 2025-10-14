@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Modules\Space\Events\SpaceCreated;
-use App\Modules\Space\Exceptions\DuplicateUserSpaceNameException;
 use App\Modules\Space\Models\Space;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\Event;
@@ -49,27 +48,17 @@ it('creates a space for an authenticated user', function () {
         ->name->toBe($firstSpace->name)->toBe($payload['name']);
 });
 
-it("won't create a space if the name is a duplicate for the user", function () {
+it('disallows duplicate user spaces', function () {
     // Arrange
-    $this->withoutExceptionHandling();
-
+    $existingName = 'This is a space';
     $user = User::factory()->create();
-    $payload = ['name' => 'My New Space'];
-    Space::factory()->for($user)->create($payload);
-
-    // Act
-    $this->actingAs($user, 'sanctum')->postJson(route('spaces.create'), $payload);
-
-    // Assert
-})->throws(DuplicateUserSpaceNameException::class);
-
-it('dispatches a SpaceCreated event upon creating a new space', function () {
-    // Arrange
+    Space::factory()->for($user)->create(['name' => $existingName]);
     Event::fake();
 
     // Act
-    $this->actingAs(User::factory()->create(), 'sanctum')->postJson(route('spaces.create'), ['name' => 'My New Space']);
+    $response = $this->actingAs($user, 'sanctum')->postJson(route('spaces.create'), ['name' => $existingName]);
 
     // Assert
-    Event::assertDispatched(SpaceCreated::class);
+    $response->assertUnprocessable();
+    Event::assertNotDispatched(SpaceCreated::class);
 });

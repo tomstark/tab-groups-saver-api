@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Modules\Space\HTTP\Controllers\SpaceController;
 use App\Modules\Tab\HTTP\Controllers\TabController;
+use App\Modules\TabGroup\HTTP\Controllers\TabGroupController;
 use App\Modules\User\HTTP\Controllers\Auth\AuthenticationController;
 use App\Modules\User\HTTP\Controllers\Auth\EmailVerificationNotificationController;
 use App\Modules\User\HTTP\Controllers\Auth\NewPasswordController;
@@ -82,6 +83,16 @@ Route::name('windows.')->group(
             // Route::post('/windows', [WindowController::class, 'store'])->name('create');
             // Route::patch('/windows/{window_id}', [WindowController::class, 'update'])->name('update');
             // Route::delete('/windows/{window_id}', [WindowController::class, 'destroy'])->name('delete');
+        });
+    }
+);
+
+Route::name('tabGroups.')->group(
+    function () use ($fullAuthMiddleware) {
+        // All route names hereafter are prefixed with 'tabGroups.'
+
+        Route::middleware($fullAuthMiddleware)->group(function () {
+            Route::patch('/tab-groups/{tab_group_id}', [TabGroupController::class, 'update'])->name('update');
         });
     }
 );
