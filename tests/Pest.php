@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Arr;
+use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 /*
@@ -59,7 +61,20 @@ expect()->extend('toHaveExactKeys', function (array $keys, bool $inExactOrder = 
 |
 */
 
-function something()
+function nameAndPositionUpdateChecks(array $requestData, TestResponse $response, array $beforeData): void
 {
-    // ..
+    $responseOriginalContent = $response->getOriginalContent();
+    $response->assertOk();
+
+    if (Arr::get($requestData, 'name')) {
+        expect($responseOriginalContent->name)->not->toBe($beforeData['name']);
+    } else {
+        expect($responseOriginalContent->name)->toBe($beforeData['name']);
+    }
+
+    if (Arr::get($requestData, 'position')) {
+        expect($responseOriginalContent->position)->not->toBe($beforeData['position']);
+    } else {
+        expect($responseOriginalContent->position)->toBe($beforeData['position']);
+    }
 }

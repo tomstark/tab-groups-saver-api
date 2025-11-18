@@ -17,9 +17,12 @@ return new class extends Migration
         Schema::create('spaces', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->string('name');
+            $table->string('slug');
             $table->integer('position')->default(0);
             $table->foreignUuid('user_id')->constrained(); // ToDo - tackle deletion cascade in PHP logic, not DB
             $table->timestamps();
+
+            $table->unique(['user_id', 'slug']);
         });
 
         if (DB::connection()->getDriverName() === 'pgsql') {

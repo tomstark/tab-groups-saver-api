@@ -6,11 +6,15 @@ namespace App\Modules\Space\HTTP\Controllers;
 
 use App\Modules\Core\HTTP\Controllers\Controller;
 use App\Modules\Space\Actions\Facades\CreateSpaceAction;
+use App\Modules\Space\Actions\Facades\UpdateSpaceAction;
 use App\Modules\Space\DTOs\CreateSpaceDto;
+use App\Modules\Space\DTOs\UpdateSpaceDto;
 use App\Modules\Space\Resources\SpaceResource;
 use App\Modules\User\Models\User;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 final class SpaceController extends Controller
@@ -43,6 +47,28 @@ final class SpaceController extends Controller
         return $resource;
     }
 
+    /**
+     * @throws ValidationException
+     */
+    public function update(Request $request, string $spaceSlug): Responsable
+    {
+        /** @var array{slug: string, name?: string, position?: int} $spaceUpdateData */
+        $spaceUpdateData = Validator::make(
+            array_merge($request->all(), ['slug' => $spaceSlug]),
+            [
+                'slug' => ['required', 'string'],
+                'name' => ['sometimes', 'string', 'min:1', 'max:255'],
+                'position' => ['sometimes', 'integer', 'min:1'],
+            ]
+        )->validate();
+
+        /** @var User $user */
+        $user = $request->user();
+
+        $space = UpdateSpaceAction::run($user, UpdateSpaceDto::fromArray($spaceUpdateData));
+
+        return SpaceResource::make($space);
+    }
     // ToDo
     // public function update() {}
     // public function destroy() {}

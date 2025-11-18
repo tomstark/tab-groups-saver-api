@@ -20,6 +20,7 @@ final class SpaceSeeder extends Seeder
             ->create([
                 'id' => $spaceOneId,
                 'name' => 'Space one',
+                'slug' => 'space-one',
                 'position' => 1,
             ]);
 

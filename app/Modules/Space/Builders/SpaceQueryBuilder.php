@@ -14,9 +14,11 @@ use Illuminate\Database\Eloquent\Builder;
  */
 final class SpaceQueryBuilder extends Builder
 {
-    // ToDo
-    // public function forUserId(string $userId): self
-    // {
-    //     return $this->where('user_id', $userId);
-    // }
+    /**
+     * @return self<TModelClass>
+     */
+    public function bySlugForUserId(string $slug, string $userId): self
+    {
+        return $this->where(['slug' => $slug, 'user_id' => $userId]);
+    }
 }

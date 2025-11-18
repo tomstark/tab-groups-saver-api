@@ -10,6 +10,7 @@ use App\Modules\Space\Events\SpaceCreated;
 use App\Modules\Space\Models\Space;
 use App\Modules\User\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 final readonly class CreateSpaceAction
 {
@@ -19,7 +20,11 @@ final readonly class CreateSpaceAction
             EnsureUniqueUserSpaceNameAction::run($user, $spaceDto->name);
 
             /** @var Space $space */
-            $space = $user->spaces()->create(['name' => $spaceDto->name]);
+            $space = $user->spaces()->create([
+                'name' => $spaceDto->name,
+                // ToDo - create separate action for slug creation & cover more requirements (unique per user etc)
+                'slug' => Str::slug($spaceDto->name),
+            ]);
 
             DB::afterCommit(static fn () => event(new SpaceCreated($space)));
 

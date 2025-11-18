@@ -15,5 +15,5 @@ test('returns expected data', function () {
 
     // Assert
     expect($responseData)->toHaveExactKeys(['data', 'success'])
-        ->and($responseData->data)->toHaveExactKeys(['id', 'name', 'position']);
+        ->and($responseData->data)->toHaveExactKeys(['id', 'name', 'slug', 'position']);
 });

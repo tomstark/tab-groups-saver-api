@@ -60,11 +60,10 @@ Route::name('spaces.')->group(
 
         Route::middleware($fullAuthMiddleware)->group(function () {
             Route::get('/spaces', [SpaceController::class, 'index'])->name('index');
-
             Route::post('/spaces', [SpaceController::class, 'store'])->name('create');
+            Route::patch('/spaces/{space_slug}', [SpaceController::class, 'update'])->name('update');
 
             // ToDo
-            // Route::patch('/spaces/{space_id}', [SpaceController::class, 'update'])->name('update');
             // Route::delete('/spaces/{space_id}', [SpaceController::class, 'destroy'])->name('delete');
         });
     }
@@ -102,7 +101,7 @@ Route::name('tabs.')->group(
         // All route names hereafter are prefixed with 'tabs.'
 
         Route::middleware($fullAuthMiddleware)->group(function () {
-            Route::get('/tabs/{tab_id}', [TabController::class, 'show'])
+            Route::get('/tabs/{tab_id?}', [TabController::class, 'show'])
                 ->name('show')
                 ->whereUuid('tab_id');
 

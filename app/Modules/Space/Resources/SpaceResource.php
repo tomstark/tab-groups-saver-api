@@ -11,6 +11,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property-read string $id
  * @property-read string $name
+ * @property-read string $slug
  * @property-read int $position
  */
 final class SpaceResource extends JsonResource
@@ -25,6 +26,7 @@ final class SpaceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'slug' => $this->slug,
             'position' => $this->position,
         ];
     }

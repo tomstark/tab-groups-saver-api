@@ -22,6 +22,7 @@ use Spatie\EloquentSortable\SortableTrait;
 /**
  * @property string $id
  * @property string $name
+ * @property string $slug
  * @property string $color - ToDo - likely cast to an enum
  * @property int $position
  * @property CarbonImmutable $created_at
@@ -41,7 +42,7 @@ final class Space extends Model implements Sortable
     /** @use HasFactory<SpaceFactory> */
     use HasFactory, HasUuids, SortableTrait;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug'];
 
     /**
      * @return BelongsTo<User, covariant Space>

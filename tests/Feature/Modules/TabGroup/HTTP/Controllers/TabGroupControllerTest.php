@@ -6,9 +6,8 @@ use App\Modules\Space\Models\Space;
 use App\Modules\TabGroup\Models\TabGroup;
 use App\Modules\User\Models\User;
 use App\Modules\Window\Models\Window;
-use Illuminate\Support\Arr;
 
-function prepareUpdateTests(string $nameBefore): array
+function prepareTabGroupUpdateTests(string $nameBefore): array
 {
     $user = User::factory()->create();
     $space = Space::factory()->for($user)->create();
@@ -27,7 +26,7 @@ it("has 'api', auth and 'verified' middleware applied", function () {
 it("updates a user's TabGroup", function () {
     // Arrange
     $nameBefore = 'Name before';
-    [$user, $tabGroupTwo] = prepareUpdateTests($nameBefore);
+    [$user, $tabGroupTwo] = prepareTabGroupUpdateTests($nameBefore);
     $positionBefore = $tabGroupTwo->position;
 
     $payload = ['position' => 1, 'name' => 'Updated name'];
@@ -51,7 +50,7 @@ it("updates a user's TabGroup", function () {
 it('only updates relevant properties', function (array $requestData) {
     // Arrange
     $nameBefore = 'Name before';
-    [$user, $tabGroupTwo] = prepareUpdateTests($nameBefore);
+    [$user, $tabGroupTwo] = prepareTabGroupUpdateTests($nameBefore);
     $positionBefore = $tabGroupTwo->position;
 
     // Act
@@ -61,20 +60,7 @@ it('only updates relevant properties', function (array $requestData) {
     );
 
     // Assert
-    $responseOriginalContent = $response->getOriginalContent();
-    $response->assertOk();
-
-    if (Arr::get($requestData, 'name')) {
-        expect($responseOriginalContent->name)->not->toBe($nameBefore);
-    } else {
-        expect($responseOriginalContent->name)->toBe($nameBefore);
-    }
-
-    if (Arr::get($requestData, 'position')) {
-        expect($responseOriginalContent->position)->not->toBe($positionBefore);
-    } else {
-        expect($responseOriginalContent->position)->toBe($positionBefore);
-    }
+    nameAndPositionUpdateChecks($requestData, $response, ['name' => $nameBefore, 'position' => $positionBefore]);
 })->with([
     ['requestData' => ['position' => 1]],
     ['requestData' => ['name' => 'Updated name']],
@@ -83,12 +69,12 @@ it('only updates relevant properties', function (array $requestData) {
 
 it('disallows invalid requests', function () {
     // Arrange
-    [$user, $tabGroupTwo] = prepareUpdateTests('a');
+    [$user, $tabGroupTwo] = prepareTabGroupUpdateTests('a');
 
     // Act
     $response = $this->actingAs($user, 'sanctum')->patchJson(
         route('tabGroups.update', ['tab_group_id' => $tabGroupTwo->id]),
-        ['position' => -1]
+        ['position' => -1] // invalid
     );
 
     // Assert

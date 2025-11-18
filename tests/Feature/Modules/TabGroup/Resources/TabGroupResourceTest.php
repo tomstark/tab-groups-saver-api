@@ -22,7 +22,7 @@ test('returns expected data', function (bool $withTabsLoaded, array $expectedDat
     expect($responseData)->toHaveExactKeys(['data', 'success'])
         ->and($responseData->data)->toHaveExactKeys($expectedData);
 })->with(function () {
-    $baseData = ['id', 'name', 'position', 'updated_at'];
+    $baseData = ['id', 'name', 'color', 'position', 'updated_at'];
 
     return [
         'without tabs loaded' => ['withTabsLoaded' => false, 'expectedData' => $baseData],

@@ -6,6 +6,7 @@ namespace Database\Factories;
 
 use App\Modules\Space\Models\Space;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<Space>
@@ -19,8 +20,11 @@ final class SpaceFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->words(2, true);
+
         return [
-            'name' => fake()->words(2, true),
+            'name' => $name,
+            'slug' => Str::slug($name),
         ];
     }
 }
